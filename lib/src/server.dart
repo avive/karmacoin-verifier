@@ -43,11 +43,7 @@ class VerifierService extends vt.VerifierServiceBase {
       _logger.stdout('firebase api result: ${e.message}');
     }
 
-    // todo: generate from private key from config file
-    _verifier_key_pair = ed.generateKey();
-
     List<int> _verifier_private_key = HEX.decode(_config['validatorId']);
-
     ed.PrivateKey privateKey = ed.PrivateKey(_verifier_private_key);
     ed.PublicKey publicKey = ed.public(privateKey);
     _verifier_key_pair = ed.KeyPair(privateKey, publicKey);
@@ -144,6 +140,7 @@ Future<void> main(List<String> args) async {
   VerifierService service = VerifierService(logger, config);
   await service.init();
 
+  // todo: set secure server for production with cert
   final server = Server(
     [service],
     [],
