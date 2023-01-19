@@ -110,10 +110,6 @@ class VerifierService extends vt.VerifierServiceBase {
     response.accountId = request.accountId;
     response.mobileNumber = request.mobileNumber;
     response.userName = request.requestedUserName;
-
-    // todo: remove result from response - if we send a response it means the number is verified
-    response.result = t.VerifyNumberResult.VERIFY_NUMBER_RESULT_VERIFIED;
-
     response.timestamp = DateTime.now().microsecondsSinceEpoch as Int64;
 
     VerifyNumberResponse respWrapper = VerifyNumberResponse(response);

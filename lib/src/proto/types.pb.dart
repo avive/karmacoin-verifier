@@ -1147,11 +1147,10 @@ class VerifyNumberResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'VerifyNumberResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'karma_coin.core_types'), createEmptyInstance: create)
     ..aOM<AccountId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'verifierAccountId', subBuilder: AccountId.create)
     ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timestamp', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..e<VerifyNumberResult>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result', $pb.PbFieldType.OE, defaultOrMaker: VerifyNumberResult.VERIFY_NUMBER_RESULT_UNKNOWN, valueOf: VerifyNumberResult.valueOf, enumValues: VerifyNumberResult.values)
-    ..aOM<AccountId>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'accountId', subBuilder: AccountId.create)
-    ..aOM<MobileNumber>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mobileNumber', subBuilder: MobileNumber.create)
-    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userName')
-    ..aOM<Signature>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', subBuilder: Signature.create)
+    ..aOM<AccountId>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'accountId', subBuilder: AccountId.create)
+    ..aOM<MobileNumber>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mobileNumber', subBuilder: MobileNumber.create)
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userName')
+    ..aOM<Signature>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signature', subBuilder: Signature.create)
     ..hasRequiredFields = false
   ;
 
@@ -1159,7 +1158,6 @@ class VerifyNumberResponse extends $pb.GeneratedMessage {
   factory VerifyNumberResponse({
     AccountId? verifierAccountId,
     $fixnum.Int64? timestamp,
-    VerifyNumberResult? result,
     AccountId? accountId,
     MobileNumber? mobileNumber,
     $core.String? userName,
@@ -1171,9 +1169,6 @@ class VerifyNumberResponse extends $pb.GeneratedMessage {
     }
     if (timestamp != null) {
       _result.timestamp = timestamp;
-    }
-    if (result != null) {
-      _result.result = result;
     }
     if (accountId != null) {
       _result.accountId = accountId;
@@ -1231,55 +1226,46 @@ class VerifyNumberResponse extends $pb.GeneratedMessage {
   void clearTimestamp() => clearField(2);
 
   @$pb.TagNumber(3)
-  VerifyNumberResult get result => $_getN(2);
+  AccountId get accountId => $_getN(2);
   @$pb.TagNumber(3)
-  set result(VerifyNumberResult v) { setField(3, v); }
+  set accountId(AccountId v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasResult() => $_has(2);
+  $core.bool hasAccountId() => $_has(2);
   @$pb.TagNumber(3)
-  void clearResult() => clearField(3);
+  void clearAccountId() => clearField(3);
+  @$pb.TagNumber(3)
+  AccountId ensureAccountId() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  AccountId get accountId => $_getN(3);
+  MobileNumber get mobileNumber => $_getN(3);
   @$pb.TagNumber(4)
-  set accountId(AccountId v) { setField(4, v); }
+  set mobileNumber(MobileNumber v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasAccountId() => $_has(3);
+  $core.bool hasMobileNumber() => $_has(3);
   @$pb.TagNumber(4)
-  void clearAccountId() => clearField(4);
+  void clearMobileNumber() => clearField(4);
   @$pb.TagNumber(4)
-  AccountId ensureAccountId() => $_ensure(3);
+  MobileNumber ensureMobileNumber() => $_ensure(3);
 
   @$pb.TagNumber(5)
-  MobileNumber get mobileNumber => $_getN(4);
+  $core.String get userName => $_getSZ(4);
   @$pb.TagNumber(5)
-  set mobileNumber(MobileNumber v) { setField(5, v); }
+  set userName($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(5)
-  $core.bool hasMobileNumber() => $_has(4);
+  $core.bool hasUserName() => $_has(4);
   @$pb.TagNumber(5)
-  void clearMobileNumber() => clearField(5);
-  @$pb.TagNumber(5)
-  MobileNumber ensureMobileNumber() => $_ensure(4);
+  void clearUserName() => clearField(5);
 
   @$pb.TagNumber(6)
-  $core.String get userName => $_getSZ(5);
+  Signature get signature => $_getN(5);
   @$pb.TagNumber(6)
-  set userName($core.String v) { $_setString(5, v); }
+  set signature(Signature v) { setField(6, v); }
   @$pb.TagNumber(6)
-  $core.bool hasUserName() => $_has(5);
+  $core.bool hasSignature() => $_has(5);
   @$pb.TagNumber(6)
-  void clearUserName() => clearField(6);
-
-  @$pb.TagNumber(7)
-  Signature get signature => $_getN(6);
-  @$pb.TagNumber(7)
-  set signature(Signature v) { setField(7, v); }
-  @$pb.TagNumber(7)
-  $core.bool hasSignature() => $_has(6);
-  @$pb.TagNumber(7)
-  void clearSignature() => clearField(7);
-  @$pb.TagNumber(7)
-  Signature ensureSignature() => $_ensure(6);
+  void clearSignature() => clearField(6);
+  @$pb.TagNumber(6)
+  Signature ensureSignature() => $_ensure(5);
 }
 
 class NewUserTransactionV1 extends $pb.GeneratedMessage {

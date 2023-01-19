@@ -124,30 +124,16 @@ message PaymentTransactionV1 {
     uint32 char_trait_id = 3; // char trait id set by sender. e.g. smart
 }
 
-enum VerifyNumberResult {
-    VERIFY_NUMBER_RESULT_UNKNOWN = 0;
-    VERIFY_NUMBER_RESULT_USER_NAME_TAKEN = 1;
-    VERIFY_NUMBER_RESULT_INVALID_SIGNATURE = 2;
 
-    // number is registered to another account
-    VERIFY_NUMBER_RESULT_NUMBER_ALREADY_REGISTERED_OTHER_ACCOUNT = 3;
-
-    // an account with this number already exists
-    VERIFY_NUMBER_RESULT_NUMBER_ALREADY_REGISTERED_THIS_ACCOUNT = 4;
-
-    // Account verified
-    VERIFY_NUMBER_RESULT_VERIFIED = 5;
-}
 
 // Created and signed by a verifier
 message VerifyNumberResponse {
     AccountId verifier_account_id = 1;
     uint64 timestamp = 2;
-    VerifyNumberResult result = 3;
-    AccountId account_id = 4;
-    MobileNumber mobile_number = 5;
-    string user_name = 6;
-    Signature signature = 7;
+    AccountId account_id = 3;
+    MobileNumber mobile_number = 4;
+    string user_name = 5;
+    Signature signature = 6;
 }
 
 // new user transactions submitted by users
