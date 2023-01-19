@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
 import 'package:grpc/grpc.dart';
+import 'package:hex/hex.dart';
 import 'package:kc_verifier/src/proto/types.pb.dart' as t;
 import 'package:kc_verifier/src/proto/verifier.pbgrpc.dart' as vt;
 import 'package:firebase_admin/firebase_admin.dart';
@@ -44,6 +45,15 @@ class VerifierService extends vt.VerifierServiceBase {
 
     // todo: generate from private key from config file
     _verifier_key_pair = ed.generateKey();
+
+    List<int> _verifier_private_key = HEX.decode(_config['validatorId']);
+
+    ed.PrivateKey privateKey = ed.PrivateKey(_verifier_private_key);
+    ed.PublicKey publicKey = ed.public(privateKey);
+    _verifier_key_pair = ed.KeyPair(privateKey, publicKey);
+
+    _logger.stdout(
+        'Validator public id: ${HEX.encode(_verifier_key_pair!.publicKey.bytes.toList())}');
 
     _logger.stdout('server initialized.');
   }
@@ -118,6 +128,8 @@ Future<void> main(List<String> args) async {
     'credsFile':
         '/Users/avive/dev/karmacoin-83d45-firebase-adminsdk-5ebsq-19a3b0c61a.json',
     'projectId': 'karmacoin-83d45',
+    'validatorId':
+        'dcd5e679f97f8fd93186effbf155cc55751ee8f5bc394a19de28d5f901f5455da885bf7ac670b0f01a3551740020e115641005a93f59472002bfd1dc665f4a4e',
     'serverPort': 8080,
   };
 
