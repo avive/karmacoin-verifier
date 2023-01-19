@@ -18,13 +18,12 @@ import 'package:cli_util/cli_logging.dart';
 class VerifierService extends vt.VerifierServiceBase {
   App? _firebase_app;
   ed.KeyPair? _verifier_key_pair;
-  Logger? _logger;
-  Map<String, dynamic> _config = {};
+  Logger _logger;
+  Map<String, dynamic> _config;
 
-  Future<void> init(Map<String, dynamic> config, logger) async {
-    _config = config;
-    _logger = logger;
+  VerifierService(this._logger, this._config);
 
+  Future<void> init() async {
     // todo: get path to creds file from an env var or from config file
     Credential cred = FirebaseAdmin.instance.certFromPath(_config['credsFile']);
 
@@ -36,17 +35,17 @@ class VerifierService extends vt.VerifierServiceBase {
     try {
       UserRecord v =
           await _firebase_app!.auth().getUserByPhoneNumber("+972549805381");
-      _logger!.stdout('accountId base64: ${v.displayName}');
+      _logger.stdout('accountId base64: ${v.displayName}');
     } on FirebaseAuthError catch (e) {
-      _logger!.stdout('firebase user not found: ${e.message}');
+      _logger.stdout('firebase user not found: ${e.message}');
     } on FirebaseException catch (e) {
-      _logger!.stdout('firebase api result: ${e.message}');
+      _logger.stdout('firebase api result: ${e.message}');
     }
 
     // todo: generate from private key from config file
     _verifier_key_pair = ed.generateKey();
 
-    _logger!.stdout('server initialized.');
+    _logger.stdout('server initialized.');
   }
 
   @override
@@ -72,10 +71,10 @@ class VerifierService extends vt.VerifierServiceBase {
           .getUserByPhoneNumber(request.mobileNumber.number);
       accunt_id_base64 = v.displayName;
     } on FirebaseAuthError catch (e) {
-      _logger!.stdout('No firebase user found for phone number. ${e.message}');
+      _logger.stdout('No firebase user found for phone number. ${e.message}');
       throw GrpcError.invalidArgument('Phone number not registered');
     } on FirebaseException catch (e) {
-      _logger!.stdout('getUserByPhoneNumber result: ${e.message}');
+      _logger.stdout('getUserByPhoneNumber result: ${e.message}');
       throw GrpcError.internal('Firebase error: ${e.message}');
     }
 
@@ -116,10 +115,10 @@ Future<void> main(List<String> args) async {
 
   // default config values
   Map<String, dynamic> config = {
-    "credsFile":
+    'credsFile':
         '/Users/avive/dev/karmacoin-83d45-firebase-adminsdk-5ebsq-19a3b0c61a.json',
-    "projectId": 'karmacoin-83d45',
-    "serverPort": 8080,
+    'projectId': 'karmacoin-83d45',
+    'serverPort': 8080,
   };
 
   // override with config file
@@ -130,8 +129,8 @@ Future<void> main(List<String> args) async {
     config = loadYaml(file.readAsStringSync());
   }
 
-  VerifierService service = VerifierService();
-  await service.init(config, logger);
+  VerifierService service = VerifierService(logger, config);
+  await service.init();
 
   final server = Server(
     [service],
