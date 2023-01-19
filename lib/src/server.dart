@@ -51,23 +51,27 @@ class VerifierService extends vt.VerifierServiceBase {
     _logger.stdout(
         'Validator public id: ${HEX.encode(_verifier_key_pair!.publicKey.bytes.toList())}');
 
-    _logger.stdout('server initialized.');
+    _logger.stdout('Verifier server initialized.');
   }
 
   @override
   Future<t.VerifyNumberResponse> verifyNumber(
       ServiceCall call, vt.VerifyNumberRequest request) async {
+    _logger.stdout('new request: ${request.toString()}');
+
     VerifyNumberRequest req = VerifyNumberRequest(request);
     bool verified =
         await req.verify(ed.PublicKey(request.accountId.data as Uint8List));
 
     if (!verified) {
+      _logger.stdout('Invalid reqest signatre');
       throw GrpcError.invalidArgument('Invalid reuqset signature');
     }
 
     String? accunt_id_base64;
 
     if (_firebase_app == null) {
+      _logger.stdout('Internal error - firebase app not initialized');
       throw GrpcError.internal('Firebase app not initialized');
     }
 
@@ -85,6 +89,7 @@ class VerifierService extends vt.VerifierServiceBase {
     }
 
     if (accunt_id_base64 == null) {
+      _logger.stdout('Phone number not reigstered on firebase');
       throw GrpcError.invalidArgument('Phone number not registered');
     }
 
@@ -92,8 +97,10 @@ class VerifierService extends vt.VerifierServiceBase {
     Uint8List verified_account_id = base64Decode(accunt_id_base64);
 
     if (!listsEqual(verified_account_id, request.accountId.data)) {
+      _logger
+          .stdout('Verified account id doesn\'t match the one in the request');
       throw GrpcError.invalidArgument(
-          'Registered account id does not match the one in the request');
+          'Verified account id does not match the one in the request');
     }
 
     t.VerifyNumberResponse response = t.VerifyNumberResponse();
@@ -112,6 +119,7 @@ class VerifierService extends vt.VerifierServiceBase {
     VerifyNumberResponse respWrapper = VerifyNumberResponse(response);
     respWrapper.sign(_verifier_key_pair!.privateKey);
 
+    _logger.stdout('returned signed verification response to caller');
     return respWrapper.response;
   }
 }
