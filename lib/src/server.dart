@@ -123,7 +123,7 @@ class VerifierService extends vt.VerifierServiceBase {
 Future<void> main(List<String> args) async {
   Logger logger = Logger.standard();
 
-  // default config values
+  // default config values for dev mode. Production config data comes from a file
   Map<String, dynamic> config = {
     'credsFile':
         '/Users/avive/dev/karmacoin-83d45-firebase-adminsdk-5ebsq-19a3b0c61a.json',
@@ -150,7 +150,6 @@ Future<void> main(List<String> args) async {
     CodecRegistry(codecs: const [GzipCodec(), IdentityCodec()]),
   );
 
-  // todo: read port from config file
   await server.serve(port: config['serverPort']);
   logger.stdout('Server listening on port ${server.port}...');
 }
