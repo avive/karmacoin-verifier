@@ -9,6 +9,7 @@ class VerifyNumberRequest {
   final vt.VerifyNumberRequest request;
   VerifyNumberRequest(this.request);
 
+  /// Sign the request using provided private key
   void sign(ed.PrivateKey privateKey,
       {keyScheme = KeyScheme.KEY_SCHEME_ED25519}) {
     Uint8List signature = ed.sign(privateKey, request.writeToBuffer());
@@ -16,6 +17,7 @@ class VerifyNumberRequest {
         Signature(scheme: keyScheme, signature: signature.toList());
   }
 
+  /// Verify signature using provided public key
   bool verify(ed.PublicKey publicKey,
       {keyScheme = KeyScheme.KEY_SCHEME_ED25519}) {
     if (keyScheme != KeyScheme.KEY_SCHEME_ED25519) {

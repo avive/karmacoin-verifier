@@ -9,6 +9,7 @@ class VerifyNumberResponse {
   final types.VerifyNumberResponse response;
   VerifyNumberResponse(this.response);
 
+  // Sign the response using provided private key
   void sign(ed.PrivateKey privateKey,
       {keyScheme = KeyScheme.KEY_SCHEME_ED25519}) {
     Uint8List signature = ed.sign(privateKey, response.writeToBuffer());
