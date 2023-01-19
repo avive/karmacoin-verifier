@@ -1,0 +1,169 @@
+// Copyright (c) 2022, KarmaCoin Authors. a@karmaco.in.
+// This work is licensed under the KarmaCoin v0.1.0 license published in the LICENSE file of this repo.
+//
+
+syntax = "proto3";
+package karma_coin.api;
+
+import "karma_coin/core_types/types.proto";
+
+// Unified public API provided by blockchain nodes and verifiers
+service ApiService {
+  // check if a nickname is available
+  rpc GetUserInfoByUserName(GetUserInfoByUserNameRequest) returns (GetUserInfoByUserNameResponse);
+
+  // Returns on-chain user info by phone number if user exists
+  rpc GetUserInfoByNumber(GetUserInfoByNumberRequest) returns (GetUserInfoByNumberResponse);
+
+  // Returns on-chain user info by account id if user exists
+  rpc GetUserInfoByAccount(GetUserInfoByAccountRequest) returns (GetUserInfoByAccountResponse);
+
+  // Returns the current blockchain state
+  rpc GetBlockchainData(GetBlockchainDataRequest) returns (GetBlockchainDataResponse);
+
+  // Returns the current blockchain state
+  rpc GetGenesisData(GetGenesisDataRequest) returns (GetGenesisDataResponse);
+
+  // Submit a signed transaction to the blockchain
+  rpc SubmitTransaction(SubmitTransactionRequest) returns (SubmitTransactionResponse);
+
+  // Get all transactions between two account, included transactions in the pool and not yet on-chain
+  // Results include txs current status and all events omitted for each transaction
+  rpc GetTransactions(GetTransactionsRequest) returns (GetTransactionsResponse);
+
+  // Get transaction data by its digest hash. Transaction may be in pool or on-chain
+  // Returns all events associated with the transaction
+  rpc GetTransaction(GetTransactionRequest) returns (GetTransactionResponse);
+
+  // Get blockchain events for a range of heights
+  rpc GetBlockchainEvents(GetBlockchainEventsRequest) returns (GetBlockchainEventsResponse) {
+  }
+
+  // Get blockchain events for a range of heights
+  rpc GetBlocks(GetBlocksRequest) returns (GetBlocksResponse) {
+  }
+
+}
+
+// Get user by user name
+message GetUserInfoByUserNameRequest {
+  string user_name = 1;
+}
+
+message GetUserInfoByUserNameResponse {
+  core_types.User user = 1;
+}
+
+message SubmitTransactionRequest {
+     core_types.SignedTransaction transaction = 1;
+}
+
+enum SubmitTransactionResult {
+  SUBMIT_TRANSACTION_RESULT_REJECTED = 0;
+  SUBMIT_TRANSACTION_RESULT_SUBMITTED = 1;
+}
+
+message SubmitTransactionResponse {
+  SubmitTransactionResult submit_transaction_result = 1;
+}
+
+message GetUserInfoByNumberRequest {
+  core_types.MobileNumber mobile_number = 1;
+}
+
+message GetUserInfoByNumberResponse {
+  core_types.User user = 1;
+}
+
+message GetUserInfoByAccountRequest {
+  core_types.AccountId account_id = 1;
+}
+
+message GetUserInfoByAccountResponse {
+  core_types.User user = 1;
+}
+
+message GetGenesisDataRequest {
+}
+
+message GetGenesisDataResponse {
+  uint32 net_id = 1;
+  string net_name = 2;
+  uint64 genesis_time = 3;
+  uint64 signup_reward_phase1_alloc = 4;
+  uint64 signup_reward_phase2_alloc = 5;
+
+  uint64 signup_reward_phase1_amount = 6;
+  uint64 signup_reward_phase2_amount = 7;
+  uint64 signup_reward_phase3_start = 8;
+
+  uint64 referral_reward_phase1_alloc = 9;
+  uint64 referral_reward_phase2_alloc = 10;
+
+  uint64 referral_reward_phase1_amount = 11;
+  uint64 referral_reward_phase2_amount = 12;
+
+  uint64 tx_fee_subsidy_max_per_user = 13;
+  uint64 tx_fee_subsidies_alloc = 14;
+  uint64 tx_fee_subsidy_max_amount = 15;
+
+  uint64 block_reward_amount = 16;
+  uint64 block_reward_last_block = 17;
+
+  uint64 karma_reward_amount = 18;
+  uint64 karma_reward_alloc = 19;
+  uint64 karma_reward_top_n_users = 20;
+
+  uint64 treasury_premint_amount = 21;
+  string treasury_account_id = 22;
+  string treasury_account_name = 23;
+
+  repeated core_types.CharTrait char_traits = 24;
+  repeated core_types.PhoneVerifier verifiers = 25;
+
+}
+
+message GetBlockchainDataRequest {
+}
+
+// Current blockchain data
+message GetBlockchainDataResponse {
+  core_types.BlockchainStats stats = 1;
+}
+
+message GetTransactionsRequest {
+  core_types.AccountId account_id = 1;
+}
+
+message GetTransactionsResponse {
+  repeated core_types.SignedTransactionWithStatus transactions = 1;
+  core_types.TransactionEvents tx_events = 2;
+}
+
+message GetTransactionRequest {
+  bytes tx_hash = 1;
+}
+
+message GetTransactionResponse {
+  core_types.SignedTransactionWithStatus transaction = 1;
+  core_types.TransactionEvents tx_events = 2;
+}
+
+message GetBlockchainEventsRequest {
+  uint64 from_block_height = 1;
+  uint64 to_block_height = 2;
+}
+
+message GetBlockchainEventsResponse {
+  repeated core_types.BlockEvent blocks_events = 1;
+}
+
+message GetBlocksRequest {
+  uint64 from_block_height = 1;
+  uint64 to_block_height = 2;
+}
+
+message GetBlocksResponse {
+  repeated core_types.Block blocks = 1;
+}
+
