@@ -43,8 +43,8 @@ class VerifierService extends vt.VerifierServiceBase {
       _logger.stdout('firebase api result: ${e.message}');
     }
 
-    List<int> _verifier_private_key = HEX.decode(_config['validatorId']);
-    ed.PrivateKey privateKey = ed.PrivateKey(_verifier_private_key);
+    ed.PrivateKey privateKey =
+        ed.PrivateKey(HEX.decode(_config['validatorId']));
     ed.PublicKey publicKey = ed.public(privateKey);
     _verifier_key_pair = ed.KeyPair(privateKey, publicKey);
 
@@ -66,6 +66,13 @@ class VerifierService extends vt.VerifierServiceBase {
     if (!verified) {
       _logger.stdout('Invalid reqest signatre');
       throw GrpcError.invalidArgument('Invalid reuqset signature');
+    }
+
+    if ((_config['whiteList'] as List<String>)
+        .contains(request.mobileNumber.number)) {
+      // Skip whitelisted numbers used in dev testing
+      _logger.stdout('White listed number - skipping firebase check');
+      return newResponse(request);
     }
 
     String? accunt_id_base64;
@@ -103,19 +110,25 @@ class VerifierService extends vt.VerifierServiceBase {
           'Verified account id does not match the one in the request');
     }
 
+    return newResponse(request);
+  }
+
+  /// Returns a new verificaiton response for the provided request
+  t.VerifyNumberResponse newResponse(vt.VerifyNumberRequest request) {
     t.VerifyNumberResponse response = t.VerifyNumberResponse();
     t.AccountId verifier_account_id = t.AccountId();
     verifier_account_id.data = _verifier_key_pair!.publicKey.bytes.toList();
     response.verifierAccountId = verifier_account_id;
     response.accountId = request.accountId;
     response.mobileNumber = request.mobileNumber;
-    response.userName = request.requestedUserName;
-    response.timestamp = DateTime.now().microsecondsSinceEpoch as Int64;
+
+    // todo: remove this from verifier - it shouldn't know or care about user names
+    response.requestedUserName = request.requestedUserName;
+    response.timestamp = Int64(DateTime.now().millisecondsSinceEpoch);
 
     VerifyNumberResponse respWrapper = VerifyNumberResponse(response);
     respWrapper.sign(_verifier_key_pair!.privateKey);
 
-    _logger.stdout('returned signed verification response to caller');
     return respWrapper.response;
   }
 }
@@ -131,6 +144,7 @@ Future<void> main(List<String> args) async {
     'validatorId':
         'dcd5e679f97f8fd93186effbf155cc55751ee8f5bc394a19de28d5f901f5455da885bf7ac670b0f01a3551740020e115641005a93f59472002bfd1dc665f4a4e',
     'serverPort': 8080,
+    'whiteList': ["+972539805381", "+972549805381", "+972549805382"],
   };
 
   // override with config file
