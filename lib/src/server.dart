@@ -144,7 +144,7 @@ Future<void> main(List<String> args) async {
     'validatorId':
         'dcd5e679f97f8fd93186effbf155cc55751ee8f5bc394a19de28d5f901f5455da885bf7ac670b0f01a3551740020e115641005a93f59472002bfd1dc665f4a4e',
     'serverPort': 8080,
-    'whiteList': ["+972539805381", "+972549805381", "+972549805382"],
+    'whiteList': ["+972539805381", "+972549805381", "+--"],
   };
 
   // override with config file
