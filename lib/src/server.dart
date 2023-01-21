@@ -60,8 +60,8 @@ class VerifierService extends vt.VerifierServiceBase {
     _logger.stdout('new request: ${request.toString()}');
 
     VerifyNumberRequest req = VerifyNumberRequest(request);
-    bool verified =
-        await req.verify(ed.PublicKey(request.accountId.data as Uint8List));
+    bool verified = await req
+        .verify(ed.PublicKey(Uint8List.fromList(request.accountId.data)));
 
     if (!verified) {
       _logger.stdout('Invalid reqest signatre');
@@ -110,6 +110,9 @@ class VerifierService extends vt.VerifierServiceBase {
           'Verified account id does not match the one in the request');
     }
 
+    _logger.stdout(
+        'Verified ${request.mobileNumber.number}. Returning response...');
+
     return newResponse(request);
   }
 
@@ -144,7 +147,7 @@ Future<void> main(List<String> args) async {
     'validatorId':
         'dcd5e679f97f8fd93186effbf155cc55751ee8f5bc394a19de28d5f901f5455da885bf7ac670b0f01a3551740020e115641005a93f59472002bfd1dc665f4a4e',
     'serverPort': 8080,
-    'whiteList': ["+972539805381", "+972549805381", "+--"],
+    'whiteList': ["+972539805381", "+972549805381", "+972549805382"],
   };
 
   // override with config file

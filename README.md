@@ -12,3 +12,9 @@ From the project root dir:
 ```bash
 dart compile exe lib/src/server.dart -o ./verifier.exe
 ```
+
+## Running
+```
+envoy -c envoy/config.yaml
+./verifier.exe
+```
