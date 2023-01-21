@@ -36,7 +36,8 @@ static_resources:
                "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_web.v3.GrpcWeb
           - name: envoy.filters.http.cors
             typed_config:
-                "@type": type.googleapis.com/envoy.extensions.filters.http.cors.v3.Cors
+                "@type": type.googleapis.com/envoy.extensions.filters.http.cors.v3.Cors            
+
           - name: envoy.filters.http.router
             typed_config:
               "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router    
@@ -44,10 +45,10 @@ static_resources:
   - name: verifier_service
     connect_timeout: 0.25s
     type: STATIC
-    lb_policy: round_robin
+    lb_policy: ROUND_ROBIN
     http2_protocol_options: {}
     load_assignment:
-      cluster_name: cluster_0
+      cluster_name: verifier_service
       endpoints:
       - lb_endpoints:
         - endpoint:
