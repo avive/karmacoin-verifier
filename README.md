@@ -18,3 +18,5 @@ dart compile exe lib/src/server.dart -o ./verifier.exe
 envoy -c envoy/config.yaml
 ./verifier.exe
 ```
+
+Copyright (c) 2022 by the KarmaCoin Authors. This work is licensed under the [KarmaCoin License](https://github.com/karma-coin/.github/blob/main/LICENSE).
