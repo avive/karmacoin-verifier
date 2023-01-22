@@ -1,5 +1,5 @@
-name: kc_verifier
-description: karmacoin verifier
+name: kc_authenticator
+description: karmacoin authenticaiton proxy
 publish_to: none
 
 environment:
