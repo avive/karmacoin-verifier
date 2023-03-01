@@ -956,15 +956,15 @@ class CharTrait extends $pb.GeneratedMessage {
 
 class TraitScore extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TraitScore', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'karma_coin.core_types'), createEmptyInstance: create)
-    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'traitId', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'score', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'traitId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'score', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
   TraitScore._() : super();
   factory TraitScore({
-    $fixnum.Int64? traitId,
-    $fixnum.Int64? score,
+    $core.int? traitId,
+    $core.int? score,
   }) {
     final _result = create();
     if (traitId != null) {
@@ -997,18 +997,18 @@ class TraitScore extends $pb.GeneratedMessage {
   static TraitScore? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $fixnum.Int64 get traitId => $_getI64(0);
+  $core.int get traitId => $_getIZ(0);
   @$pb.TagNumber(1)
-  set traitId($fixnum.Int64 v) { $_setInt64(0, v); }
+  set traitId($core.int v) { $_setUnsignedInt32(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasTraitId() => $_has(0);
   @$pb.TagNumber(1)
   void clearTraitId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $fixnum.Int64 get score => $_getI64(1);
+  $core.int get score => $_getIZ(1);
   @$pb.TagNumber(2)
-  set score($fixnum.Int64 v) { $_setInt64(1, v); }
+  set score($core.int v) { $_setUnsignedInt32(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasScore() => $_has(1);
   @$pb.TagNumber(2)
@@ -1066,26 +1066,36 @@ class NewUserTransactionV1 extends $pb.GeneratedMessage {
 
 class PaymentTransactionV1 extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PaymentTransactionV1', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'karma_coin.core_types'), createEmptyInstance: create)
-    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'amount', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOM<MobileNumber>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to', subBuilder: MobileNumber.create)
-    ..a<$fixnum.Int64>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'charTraitId', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'communityId', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOM<AccountId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'from', subBuilder: AccountId.create)
+    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'amount', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOM<MobileNumber>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'toNumber', subBuilder: MobileNumber.create)
+    ..aOM<AccountId>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'toAccountId', subBuilder: AccountId.create)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'charTraitId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'communityId', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
   PaymentTransactionV1._() : super();
   factory PaymentTransactionV1({
+    AccountId? from,
     $fixnum.Int64? amount,
-    MobileNumber? to,
-    $fixnum.Int64? charTraitId,
-    $fixnum.Int64? communityId,
+    MobileNumber? toNumber,
+    AccountId? toAccountId,
+    $core.int? charTraitId,
+    $core.int? communityId,
   }) {
     final _result = create();
+    if (from != null) {
+      _result.from = from;
+    }
     if (amount != null) {
       _result.amount = amount;
     }
-    if (to != null) {
-      _result.to = to;
+    if (toNumber != null) {
+      _result.toNumber = toNumber;
+    }
+    if (toAccountId != null) {
+      _result.toAccountId = toAccountId;
     }
     if (charTraitId != null) {
       _result.charTraitId = charTraitId;
@@ -1117,42 +1127,64 @@ class PaymentTransactionV1 extends $pb.GeneratedMessage {
   static PaymentTransactionV1? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $fixnum.Int64 get amount => $_getI64(0);
+  AccountId get from => $_getN(0);
   @$pb.TagNumber(1)
-  set amount($fixnum.Int64 v) { $_setInt64(0, v); }
+  set from(AccountId v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasAmount() => $_has(0);
+  $core.bool hasFrom() => $_has(0);
   @$pb.TagNumber(1)
-  void clearAmount() => clearField(1);
+  void clearFrom() => clearField(1);
+  @$pb.TagNumber(1)
+  AccountId ensureFrom() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  MobileNumber get to => $_getN(1);
+  $fixnum.Int64 get amount => $_getI64(1);
   @$pb.TagNumber(2)
-  set to(MobileNumber v) { setField(2, v); }
+  set amount($fixnum.Int64 v) { $_setInt64(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasTo() => $_has(1);
+  $core.bool hasAmount() => $_has(1);
   @$pb.TagNumber(2)
-  void clearTo() => clearField(2);
-  @$pb.TagNumber(2)
-  MobileNumber ensureTo() => $_ensure(1);
+  void clearAmount() => clearField(2);
 
   @$pb.TagNumber(3)
-  $fixnum.Int64 get charTraitId => $_getI64(2);
+  MobileNumber get toNumber => $_getN(2);
   @$pb.TagNumber(3)
-  set charTraitId($fixnum.Int64 v) { $_setInt64(2, v); }
+  set toNumber(MobileNumber v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasCharTraitId() => $_has(2);
+  $core.bool hasToNumber() => $_has(2);
   @$pb.TagNumber(3)
-  void clearCharTraitId() => clearField(3);
+  void clearToNumber() => clearField(3);
+  @$pb.TagNumber(3)
+  MobileNumber ensureToNumber() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  $fixnum.Int64 get communityId => $_getI64(3);
+  AccountId get toAccountId => $_getN(3);
   @$pb.TagNumber(4)
-  set communityId($fixnum.Int64 v) { $_setInt64(3, v); }
+  set toAccountId(AccountId v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasCommunityId() => $_has(3);
+  $core.bool hasToAccountId() => $_has(3);
   @$pb.TagNumber(4)
-  void clearCommunityId() => clearField(4);
+  void clearToAccountId() => clearField(4);
+  @$pb.TagNumber(4)
+  AccountId ensureToAccountId() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  $core.int get charTraitId => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set charTraitId($core.int v) { $_setUnsignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasCharTraitId() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearCharTraitId() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get communityId => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set communityId($core.int v) { $_setUnsignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasCommunityId() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearCommunityId() => clearField(6);
 }
 
 class UpdateUserTransactionV1 extends $pb.GeneratedMessage {
@@ -1704,6 +1736,8 @@ class SignedTransactionWithStatus extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SignedTransactionWithStatus', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'karma_coin.core_types'), createEmptyInstance: create)
     ..aOM<SignedTransaction>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transaction', subBuilder: SignedTransaction.create)
     ..e<TransactionStatus>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: TransactionStatus.TRANSACTION_STATUS_UNKNOWN, valueOf: TransactionStatus.valueOf, enumValues: TransactionStatus.values)
+    ..aOM<User>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'from', subBuilder: User.create)
+    ..aOM<User>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to', subBuilder: User.create)
     ..hasRequiredFields = false
   ;
 
@@ -1711,6 +1745,8 @@ class SignedTransactionWithStatus extends $pb.GeneratedMessage {
   factory SignedTransactionWithStatus({
     SignedTransaction? transaction,
     TransactionStatus? status,
+    User? from,
+    User? to,
   }) {
     final _result = create();
     if (transaction != null) {
@@ -1718,6 +1754,12 @@ class SignedTransactionWithStatus extends $pb.GeneratedMessage {
     }
     if (status != null) {
       _result.status = status;
+    }
+    if (from != null) {
+      _result.from = from;
+    }
+    if (to != null) {
+      _result.to = to;
     }
     return _result;
   }
@@ -1761,6 +1803,28 @@ class SignedTransactionWithStatus extends $pb.GeneratedMessage {
   $core.bool hasStatus() => $_has(1);
   @$pb.TagNumber(2)
   void clearStatus() => clearField(2);
+
+  @$pb.TagNumber(3)
+  User get from => $_getN(2);
+  @$pb.TagNumber(3)
+  set from(User v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasFrom() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearFrom() => clearField(3);
+  @$pb.TagNumber(3)
+  User ensureFrom() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  User get to => $_getN(3);
+  @$pb.TagNumber(4)
+  set to(User v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasTo() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearTo() => clearField(4);
+  @$pb.TagNumber(4)
+  User ensureTo() => $_ensure(3);
 }
 
 class TransactionEvent extends $pb.GeneratedMessage {
@@ -1775,7 +1839,7 @@ class TransactionEvent extends $pb.GeneratedMessage {
     ..e<FeeType>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'feeType', $pb.PbFieldType.OE, defaultOrMaker: FeeType.FEE_TYPE_MINT, valueOf: FeeType.valueOf, enumValues: FeeType.values)
     ..a<$fixnum.Int64>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signupReward', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
     ..a<$fixnum.Int64>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'referralReward', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'appreciationCharTraitIdx', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.int>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'appreciationCharTraitIdx', $pb.PbFieldType.OU3)
     ..a<$fixnum.Int64>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fee', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
     ..hasRequiredFields = false
   ;
@@ -1792,7 +1856,7 @@ class TransactionEvent extends $pb.GeneratedMessage {
     FeeType? feeType,
     $fixnum.Int64? signupReward,
     $fixnum.Int64? referralReward,
-    $fixnum.Int64? appreciationCharTraitIdx,
+    $core.int? appreciationCharTraitIdx,
     $fixnum.Int64? fee,
   }) {
     final _result = create();
@@ -1948,9 +2012,9 @@ class TransactionEvent extends $pb.GeneratedMessage {
   void clearReferralReward() => clearField(10);
 
   @$pb.TagNumber(11)
-  $fixnum.Int64 get appreciationCharTraitIdx => $_getI64(10);
+  $core.int get appreciationCharTraitIdx => $_getIZ(10);
   @$pb.TagNumber(11)
-  set appreciationCharTraitIdx($fixnum.Int64 v) { $_setInt64(10, v); }
+  set appreciationCharTraitIdx($core.int v) { $_setUnsignedInt32(10, v); }
   @$pb.TagNumber(11)
   $core.bool hasAppreciationCharTraitIdx() => $_has(10);
   @$pb.TagNumber(11)
