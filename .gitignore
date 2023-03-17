@@ -4,7 +4,5 @@
 lib/src/server.exe
 verifier.exe
 lib/.DS_Store
-authenticator.exe
-*.exe
-authenticator.exe
+/authenticator.exe
 /creds.json
