@@ -1,6 +1,12 @@
 # Karma Coin Authenticator
 A Firebase authenticaiton proxy micro service
 
+## Setup
+```bash
+dart pub global activate protoc_plugin
+dart pub get
+```
+
 ## Running in dev mode
 ```bash
 dart lib/src/server.dart

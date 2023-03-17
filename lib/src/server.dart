@@ -119,7 +119,7 @@ Future<void> main(List<String> args) async {
   // default config values for dev mode. Production config data comes from a file
   Map<String, dynamic> config = {
     'credsFile':
-        '/Users/avive/dev/karmacoin-83d45-firebase-adminsdk-5ebsq-19a3b0c61a.json',
+        './creds.json',
     'projectId': 'karmacoin-83d45',
     'validatorId':
         'dcd5e679f97f8fd93186effbf155cc55751ee8f5bc394a19de28d5f901f5455da885bf7ac670b0f01a3551740020e115641005a93f59472002bfd1dc665f4a4e',
