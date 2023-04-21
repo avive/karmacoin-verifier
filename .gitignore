@@ -6,3 +6,4 @@ verifier.exe
 lib/.DS_Store
 /authenticator.exe
 /creds.json
+/config.yaml

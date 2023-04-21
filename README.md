@@ -1,5 +1,6 @@
 # Karma Coin Authenticator
-A Firebase authenticaiton proxy micro service
+A Firebase services proxy micro service.
+Securely communicates
 
 ## Setup
 ```bash
@@ -18,6 +19,7 @@ dart compile exe lib/src/server.dart -o ./authenticator.exe
 ```
 
 ## Running
+Use creds.json to set firebase secrets.
 ```
 ./authenticator.exe
 ```

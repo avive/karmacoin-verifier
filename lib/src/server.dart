@@ -2,11 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:grpc/grpc.dart';
-import 'package:hex/hex.dart';
 import 'package:kc_authenticator/src/proto/auth.pbgrpc.dart';
 import 'package:firebase_admin/firebase_admin.dart';
 import 'package:firebase_admin/src/auth/user_record.dart';
-import 'package:ed25519_edwards/ed25519_edwards.dart' as ed;
 import 'package:quiver/collection.dart';
 import 'package:yaml/yaml.dart';
 
@@ -14,7 +12,6 @@ import 'package:cli_util/cli_logging.dart';
 
 class AuthService extends AuthServiceBase {
   App? _firebase_app;
-  ed.KeyPair? _verifier_key_pair;
   Logger _logger;
   Map<String, dynamic> _config;
 
@@ -49,14 +46,6 @@ class AuthService extends AuthServiceBase {
     } on FirebaseException catch (e) {
       _logger.stdout('firebase api result: ${e.message}');
     }
-
-    ed.PrivateKey privateKey =
-        ed.PrivateKey(HEX.decode(_config['validatorId']));
-    ed.PublicKey publicKey = ed.public(privateKey);
-    _verifier_key_pair = ed.KeyPair(privateKey, publicKey);
-
-    _logger.stdout(
-        'Validator public id: ${HEX.encode(_verifier_key_pair!.publicKey.bytes.toList())}');
 
     _logger.stdout('Auth server initialized');
   }
@@ -118,11 +107,8 @@ Future<void> main(List<String> args) async {
 
   // default config values for dev mode. Production config data comes from a file
   Map<String, dynamic> config = {
-    'credsFile':
-        './creds.json',
+    'credsFile': './creds.json',
     'projectId': 'karmacoin-83d45',
-    'validatorId':
-        'dcd5e679f97f8fd93186effbf155cc55751ee8f5bc394a19de28d5f901f5455da885bf7ac670b0f01a3551740020e115641005a93f59472002bfd1dc665f4a4e',
     'serverPort': 8080,
     'whiteList': ["+972539805381", "+972549805381", "+972549805382"],
   };
